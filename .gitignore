@@ -130,5 +130,13 @@ dist
 .pnp.*
 
 #mochawesomeReport
-
 mochawesome-report
+
+#Terraform
+.terraform*
+*.tfstate*
+*.tfvars
+
+# key
+*.key
+*.pem
