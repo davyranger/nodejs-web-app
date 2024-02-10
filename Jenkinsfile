@@ -76,7 +76,7 @@ pipeline {
         echo 'Clean up local docker images'
         script {
           sh """
-          echo "Hello World it works :)"
+          echo "Hello World it works ;)"
           """
         }
       }
