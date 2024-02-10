@@ -27,7 +27,7 @@ pipeline {
                 echo 'Run unit tests in the docker image'
                 script {
                     sh '''
-          echo "Hello World"
+          echo "Hello World again"
           '''
                 }
             }
