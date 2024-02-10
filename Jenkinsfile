@@ -29,7 +29,7 @@ pipeline {
                     DATE_NOW = sh(script: 'date +%Y%m%d', returnStdout: true)
 
                     // To parse and extract the Slack Token from the JSON response of AWS
-                    SLACK_TOKEN = sh(script: "aws secretsmanager get-secret-value --secret-id nodejs-web-app6 --region us-east-1 | python -c \"import sys;import json;print(json.loads(json.loads(sys.stdin.read())['SecretString'])['slackToken'])\" ", returnStdout: true)
+                    SLACK_TOKEN = sh(script: "aws secretsmanager get-secret-value --secret-id nodejs-web-app --region us-east-1 | python -c \"import sys;import json;print(json.loads(json.loads(sys.stdin.read())['SecretString'])['slackToken'])\" ", returnStdout: true)
 
                     REPOSITORY = REPOSITORY.trim()
                     REPOSITORY_TEST = REPOSITORY_TEST.trim()
