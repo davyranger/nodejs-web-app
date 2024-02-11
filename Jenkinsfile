@@ -10,7 +10,7 @@ def ACCOUNT_REGISTRY_PREFIX
 def S3_LOGS
 def DATE_NOW
 def SLACK_TOKEN
-def CHANNEL_ID = '#ci-cd-pipeline'
+def CHANNEL_ID = 'ci-cd-pipeline'
 
 pipeline {
     agent any
@@ -90,7 +90,7 @@ pipeline {
 
                         // Send Slack notification with the result of the tests
                         sh"""
-                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-6619171974017-6591979328087-twbYNlsyAh197vZ6YNssaR0G"
+                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-6619171974017-6591979328087-DcU8Sa9LYSFNw0KB8H2fuLyS"
                     """
                         if (inError) {
                             // Send an error signal to stop the pipeline
