@@ -90,7 +90,7 @@ pipeline {
 
                         // Send Slack notification with the result of the tests
                         sh"""
-                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-6619171974017-6591979328087-DVGqGcRixU6XTOzeNTUDWmoS"
+                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-6619171974017-6591979328087-twbYNlsyAh197vZ6YNssaR0G"
                     """
                         if (inError) {
                             // Send an error signal to stop the pipeline
