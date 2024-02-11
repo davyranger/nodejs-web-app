@@ -4,4 +4,4 @@ COPY . /opt/app
 
 WORKDIR /opt/app/server
 
-RUN npm i
+RUN npm install
