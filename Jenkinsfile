@@ -41,14 +41,12 @@ pipeline {
                     ACCOUNT_REGISTRY_PREFIX = (REPOSITORY.split('/'))[0]
                     // Configure Docker credential helper for ECR
                     sh """
-                    /bin/sh -e -c 'echo \$(aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin $ACCOUNT_REGISTRY_PREFIX)'
+                    /bin/sh -e -c 'echo \$(aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin ${ACCOUNT_REGISTRY_PREFIX}) && echo \"credStore\": \"secretservice\" >> /var/lib/jenkins/.docker/config.json'
                     """
-
 
                     // Log into ECR
                     sh """
-                    /bin/sh -e -c 'echo \$(aws ecr get-login-password --region us-east-1)  | docker login -u AWS --password-stdin $ACCOUNT_REGISTRY_PREFIX'
-
+                    /bin/sh -e -c 'aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin ${ACCOUNT_REGISTRY_PREFIX} && echo \"credStore\": \"secretservice\" >> /var/lib/jenkins/.docker/config.json'
                     """
                 }
             }
