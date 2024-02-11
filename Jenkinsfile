@@ -41,7 +41,7 @@ pipeline {
                     ACCOUNT_REGISTRY_PREFIX = (REPOSITORY.split('/'))[0]
                     // Configure Docker credential helper for ECR
                     sh """
-                        /bin/sh -e -c 'echo \$(aws ecr get-login-password --region us-east-1 | docker-credential-ecr-login store)'
+                    /bin/sh -e -c 'echo \$(aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin $ACCOUNT_REGISTRY_PREFIX)'
                     """
 
 
