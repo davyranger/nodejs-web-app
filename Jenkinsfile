@@ -162,43 +162,33 @@ pipeline {
             steps {
                 echo 'Run load balancing tests and security checks'
                 script {
+                    // Run load balancing tests
                     stagingImage.inside('-v $WORKSPACE:/output -u root') {
                         sh '''
-                cd /opt/app/server
-                npm rm loadtest
-                npm i loadtest
-                npm run test:load > /output/load_test.txt
-                '''
+                            cd /opt/app/server
+                            npm rm loadtest
+                            npm i loadtest
+                            npm run test:load > /output/load_test.txt
+                        '''
                     }
+                    
                     // Upload the load test results to S3
                     sh "aws s3 cp ./load_test.txt s3://$S3_LOGS/$DATE_NOW/$GIT_COMMIT_HASH/"
 
-            // stagingImage.withRun('-u root'){
-            //     sh """
-            //     # run arachni to check for common vulnerabilities
-            //     \$HOME/opt/arachni-1.5.1-0.5.12/bin/arachni http://\$(hostname):8000 --check=xss,code_injection --report-save-path=simple-web-app.com.afr
-            //     # Save report in html (zipped)
-            //     \$HOME/opt/arachni-1.5.1-0.5.12/bin/arachni_reporter simple-web-app.com.afr --reporter=html:outfile=arachni_report.html.zip
-            //     """
-            // }
-            // // Upload the Arachni tests' results to S3
-            // sh "aws s3 cp ./arachni_report.html.zip s3://$S3_LOGS/$DATE_NOW/$GIT_COMMIT_HASH/"
-
-                    // Inform via slack that the Load Balancing and Security checks are completed
-                    sh"""
-                /* groovylint-disable-next-line LineLength */
-                /* groovylint-disable-next-line LineLength */
-                curl --location --request POST 'https://slack.com/api/chat.postMessage' \
+                    // Inform via Slack that the Load Balancing and Security checks are completed
+                    sh """
+                        curl --location --request POST 'https://slack.com/api/chat.postMessage' \
                         --header 'Authorization: Bearer $SLACK_TOKEN' \
                         --header 'Content-Type: application/json' \
                         --data-raw '{
-                            "channel": \"$CHANNEL_ID\",
-                            "text": "Commit hash: $GIT_COMMIT_HASH -- Load Balancing tests and security checks have finished"
+                            \"channel\": \"$CHANNEL_ID\",
+                            \"text\": \"Commit hash: $GIT_COMMIT_HASH -- Load Balancing tests and security checks have finished\"
                         }'
-            """
+                    """
                 }
             }
         }
+
         stage('Deploy to Fixed Server') {
             steps {
                 echo 'Deploy release to     production'
