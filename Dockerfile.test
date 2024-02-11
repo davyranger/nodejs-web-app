@@ -4,4 +4,8 @@ COPY . /opt/app
 
 WORKDIR /opt/app/server
 
+# Remove existing package-lock.json (if any)
+RUN rm -f package-lock.json
+
+# Install dependencies
 RUN npm i
