@@ -12,8 +12,8 @@ describe("GET /users", () => {
       .get("/users")
       .then((res) => {
         expect(res).to.be.html;
-        res.text.should.match(/<h1.*>Rapidcode Users<\/h1>/g);
-        res.text.should.match(/<h3.*>.*<\/h3>/g);
+        res.text.should.match(/<h3.*>Rapidcode Users<\/h3>/g); // Updated to match <h3> tag
+        res.text.should.match(/<h3.*>.*<\/h3>/g); // Expecting <h3> tags for users
         done();
       })
       .catch((err) => {

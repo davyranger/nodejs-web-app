@@ -39,7 +39,7 @@ pipeline {
                     SLACK_TOKEN = SLACK_TOKEN.trim()
 
                     ACCOUNT_REGISTRY_PREFIX = (REPOSITORY.split('/'))[0]
-                    
+
                     // Log into ECR
                     sh """
                     /bin/sh -e -c 'echo \$(aws ecr get-login-password --region us-east-1)  | docker login -u AWS --password-stdin $ACCOUNT_REGISTRY_PREFIX'
@@ -90,7 +90,7 @@ pipeline {
 
                         // Send Slack notification with the result of the tests
                         sh"""
-                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-5182477046070-5189093730674-ZlFDWcMwvJgkdueJJoVrdccq"
+                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-6619171974017-6591979328087-g6kHBIPli4WtCnuucZtsIoNO"
                     """
                         if (inError) {
                             // Send an error signal to stop the pipeline
