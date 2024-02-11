@@ -1,22 +1,32 @@
+# Use the latest LTS version of Node.js as the base image
 FROM node:lts-alpine
 
-COPY --chown=node:node . /opt/app
-
+# Set the working directory to /opt/app
 WORKDIR /opt/app/server
 
-RUN npm i && \
-    chmod 775 -R ./node_modules/ && \
-    npm run build && \
-    npm prune --production && \
-    mv -f dist node_modules package.json package-lock.json /tmp && \
-    rm -f -R * && \
-    mv -f /tmp/* . && \
-    rm -f -R /tmp
+# Copy the project files into the container
+COPY --chown=node:node . .
 
+# Install npm packages
+RUN npm install && \
+    npm install -g npm@latest && \
+    npx browserslist@latest --update-db && \
+    npm audit fix --force
+
+# Build the project
+RUN npm run build
+
+# Prune unnecessary dependencies
+RUN npm prune --production
+
+# Set the production environment variable
 ENV NODE_ENV production
 
+# Expose the port your app runs on
 EXPOSE 8000
 
+# Run the app using node user
 USER node
 
+# Start the application
 CMD ["node", "./dist/bundle.js"]
