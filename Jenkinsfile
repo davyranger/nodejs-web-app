@@ -90,8 +90,8 @@ pipeline {
 
                         // Send Slack notification with the result of the tests
                         sh"""
-                      curl https://slack.com/api/chat.postMessage -X POST -d "channel=$CHANNEL_ID" -d "text=$textMessage"  -d "token=xoxb-6619171974017-6591979328087-DcU8Sa9LYSFNw0KB8H2fuLyS"
-                    """
+                        curl -d "text=$textMessage" -d "channel=$CHANNEL_ID" -H "Authorization: Bearer $SLACK_TOKEN" -X POST https://slack.com/api/chat.postMessage
+                        """
                         if (inError) {
                             // Send an error signal to stop the pipeline
                             error('Failed unit tests')
